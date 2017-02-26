@@ -1,3 +1,5 @@
 Lunohodes/Library/
 *.sln
 Lunohodes/Temp/
+Lunohodes/obj/
+*.csproj
