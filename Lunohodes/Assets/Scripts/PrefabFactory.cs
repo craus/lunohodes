@@ -4,6 +4,6 @@ using UnityEngine;
 
 public class PrefabFactory : MonoBehaviour {
     void Start() {
-        Destroy(gameObject);
+        Destroy(gameObject); 
     }
 }

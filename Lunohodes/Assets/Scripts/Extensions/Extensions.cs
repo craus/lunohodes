@@ -10,21 +10,99 @@ using System.Linq;
 
 public static class Extensions
 {
+	public static void Destroy(GameObject go) {
+		if (Editor()) {
+			UnityEngine.GameObject.DestroyImmediate(go);
+		} else {
+			UnityEngine.GameObject.Destroy(go);
+		}
+	}
 
-    public static Vector4 Timed(this Vector3 v, float t) {
-        return new Vector4(v.x, v.y, v.z, t);
+    public static double sqr(double x) {
+        return x * x;
     }
 
-    public static Vector3 xyz(this Vector4 v) {
-        return new Vector3(v.x, v.y, v.z);
+    public static void swap<T>(this List<T> list, int x, int y) {
+        T buf = list[x];
+        list[x] = list[y];
+        list[y] = buf;
     }
-    
-    
-    public static string Path(this GameObject obj)
-    {
+
+    public static void swap<T>(ref T x, ref T y) {
+        T buf = x;
+        x = y;
+        y = buf;
+    }
+
+    public static T rnd<T>(this List<T> list) where T : class {
+        if (list.Count == 0) return null;
+        return list[UnityEngine.Random.Range(0, list.Count)];
+    }
+
+    public static T rndExcept<T>(this List<T> list, ICollection<T> except) where T : class {
+        return list.Except(except).ToList().rnd();
+    }
+
+    public static T minBy<T>(this List<T> list, Func<T, double> criteria) where T : class {
+        T result = null;
+        foreach (T x in list) {
+            if (result == null || criteria(result) > criteria(x)) {
+                result = x;
+            }
+        }
+        return result;
+    }
+
+    public static List<T> Shuffled<T>(this List<T> list) {
+        List<T> result = new List<T>(list);
+        for (int i = 0; i < result.Count; i++) {
+            int x = UnityEngine.Random.Range(i, result.Count);
+            T buf = result[i];
+            result[i] = result[x];
+            result[x] = buf;
+        }
+        return result;
+    }
+
+	public static List<T> ShuffledPartially<T>(this List<T> list, float swapsPerElement = 1) {
+		List<T> result = new List<T>(list);
+		for (int i = 0; i < swapsPerElement * result.Count; i++) {
+			var j = UnityEngine.Random.Range(0, result.Count - 1);
+			result.swap(j, j+1);
+		}
+		return result;
+	}
+
+    public static List<T> Shuffled<T>(this List<T> list, int from = 0, int to = -1) {
+        to = modulo(to, list.Count);
+        List<T> result = new List<T>(list);
+        for (int i = from; i <= to; i++) {
+            int x = UnityEngine.Random.Range(i, to + 1);
+            T buf = result[i];
+            result[i] = result[x];
+            result[x] = buf;
+        }
+        return result;
+    }
+
+    public static int modulo(this int x, int y) {
+        return (x % y + y) % y;
+    }
+
+    public static T Cyclic<T>(this List<T> list, int index = 1) {
+        return list[modulo(index, list.Count)];
+    }
+
+    public static T CyclicNext<T>(this List<T> list, T element, int delta = 1) {
+        if (list.IndexOf(element) == -1) {
+            return default(T);
+        }
+        return list.Cyclic(list.IndexOf(element) + delta);
+    }
+
+    public static string Path(this GameObject obj) {
         string path = "/" + obj.name;
-        while (obj.transform.parent != null)
-        {
+        while (obj.transform.parent != null) {
             obj = obj.transform.parent.gameObject;
             path = "/" + obj.name + path;
         }
@@ -56,6 +134,19 @@ public static class Extensions
         return collection.Min(criteria);
     }
 
+    public static T MinBy<T>(this IEnumerable<T> collection, Func<T, float> criteria) {
+        float best = float.PositiveInfinity;
+        T result = default(T);
+        foreach(T el in collection) {
+            float cand = criteria(el);
+            if (cand < best) {
+                result = el;
+                best = cand;
+            }
+        }
+        return result;
+    }
+
     public static float ExtMax<T>(this IEnumerable<T> collection, Func<T, float> criteria) {
         if (collection.Count() == 0) {
             return float.NegativeInfinity;
@@ -66,10 +157,6 @@ public static class Extensions
     public static string ExtToString<T>(this IEnumerable<T> collection, string delimiter = ", ", string format = "[{0}]", Func<T, string> elementToString = null) {
         elementToString = elementToString ?? (obj => obj.ToString());
         return String.Format(format, String.Join(delimiter, collection.Select(obj => obj != null ? elementToString(obj) : "null").ToArray()));
-    }
-
-    public static T CyclicNext<T>(this List<T> list, T obj, int delta = 1) {
-        return list[((list.IndexOf(obj) + delta) % list.Count + list.Count) % list.Count];
     }
 
     public static void ChangeAlpha(this Material material, float alpha) {
@@ -86,6 +173,14 @@ public static class Extensions
         return result;
     }
 
+    public static Vector3 WithZ(this Vector2 v, float z) {
+        return new Vector3(
+            v.x, 
+            v.y,
+            z
+        );
+    }
+
     public static Vector3 Change(this Vector3 v, float x = float.NaN, float y = float.NaN, float z = float.NaN) {
         return new Vector3(
             float.IsNaN(x) ? v.x : x,
@@ -93,23 +188,17 @@ public static class Extensions
             float.IsNaN(z) ? v.z : z
         );
     }
-
-    public static float NormalizeAngle(float angle) {
-        while (angle < -180) {
-            angle += 360;
-        }
-        while (angle > 180) {
-            angle -= 360;
-        }
-        return angle;
+    public static Color Change(this Color c, float a = float.NaN, float r = float.NaN, float g = float.NaN, float b = float.NaN) {
+        return new Color(
+            float.IsNaN(r) ? c.r : r,
+            float.IsNaN(g) ? c.g : g,
+            float.IsNaN(b) ? c.b : b,
+            float.IsNaN(a) ? c.a : a
+        );
     }
 
     public static Vector3 NormalizeAngles(Vector3 angles) {
         return new Vector3(NormalizeAngle(angles.x), NormalizeAngle(angles.y), NormalizeAngle(angles.z));
-    }
-
-    public static string ExtToString(this Vector3 v) {
-        return String.Format("({0:0.####}, {1:0.####}, {2:0.####})", v.x, v.y, v.z);
     }
 
     public static string ExtToString(this Vector2 v) {
@@ -138,10 +227,14 @@ public static class Extensions
         transform.localRotation = Quaternion.identity;
     }
 
+    public static T Rand<T>(this T[,] matrix) {
+        return matrix[UnityEngine.Random.Range(0, matrix.GetLength(0)), UnityEngine.Random.Range(0, matrix.GetLength(1))];
+    }
+
     public static string ExtToString(this Transform t) {
         return String.Format("{{position = {0}, rotation = {1}, lossyScale = {2}}}", t.position.ExtToString(), t.rotation, t.lossyScale.ExtToString());
     }
-    
+
     public static string ExtToString(this Ray ray) {
         return String.Format("{{origin = {0}, direction = {1}}}", ray.origin.ExtToString(), ray.direction.ExtToString());
     }
@@ -162,6 +255,92 @@ public static class Extensions
         //return a.localToWorldMatrix == b.localToWorldMatrix;
     }
 
+    public static void IgnoreCollision(Component a, Component b, bool ignore = true) {
+        a.GetComponents<Collider>().ForEach(c1 => {
+            b.GetComponents<Collider>().ForEach(c2 => {
+                IgnoreCollision(c1, c2, ignore);
+            });
+        });
+    }
+
+    public static List<T> GetComponentsInMyChildren<T>(this MonoBehaviour mb) where T : MonoBehaviour {
+        List<T> res = new List<T>();
+        foreach (Transform c in mb.transform) {
+            T component = c.GetComponent<T>();
+            if (component != null) {
+                res.Add(component);
+            }
+        }
+        return res;
+    }
+
+    public static List<Transform> Children(this Transform t) {
+        List<Transform> res = new List<Transform>();
+        foreach (Transform c in t) {
+            res.Add(c);
+        }
+        return res;
+    }
+
+    public static int Modulo(int x, int y) {
+        return (x % y + y) % y;
+    }
+
+    public static int Int(this UnityEngine.UI.Slider slider) {
+        return (int)(slider.value);
+    }
+
+    public static float Direction(this Vector2 vector) {
+        return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
+    }
+
+    public static T Rnd<T>(this List<T> collection) {
+        return collection[UnityEngine.Random.Range(0, collection.Count)];
+    }
+
+    public static T Rnd<T>(this List<T> collection, Func<T, float> weight) {
+        float totalWeight = collection.Sum(weight);
+        float rndValue = UnityEngine.Random.Range(0, totalWeight);
+        float skipped = 0;
+        for (int i = 0; i < collection.Count; i++) {
+            skipped += weight(collection[i]);
+            if (skipped > rndValue) {
+                return collection[i];
+            }
+        }
+        Debug.LogFormat("skipped: {0}", skipped);
+        Debug.LogFormat("totalWeight: {0}", totalWeight);
+        throw new Exception("Wrong weighted rnd function!");
+    }
+
+    public static void TryPlay(this MonoBehaviour go, AudioSource audioSource) {
+        if (audioSource != null) {
+            audioSource.Play();
+        }
+    }
+
+    public static Vector4 Timed(this Vector3 v, float t) {
+        return new Vector4(v.x, v.y, v.z, t);
+    }
+
+    public static Vector3 xyz(this Vector4 v) {
+        return new Vector3(v.x, v.y, v.z);
+    }
+
+    public static float NormalizeAngle(float angle) {
+        while (angle < -180) {
+            angle += 360;
+        }
+        while (angle > 180) {
+            angle -= 360;
+        }
+        return angle;
+    }
+
+    public static string ExtToString(this Vector3 v) {
+        return String.Format("({0:0.####}, {1:0.####}, {2:0.####})", v.x, v.y, v.z);
+    }
+    
     static bool CloseFourVectors(Transform a, Transform b) {
         return ClosePosition(a, b) && CloseUp(a, b) && CloseForward(a, b) && CloseScale(a, b);
     }
@@ -196,29 +375,6 @@ public static class Extensions
         }
     }
 
-    public static void IgnoreCollision(Component a, Component b, bool ignore = true) {
-        a.GetComponents<Collider>().ForEach(c1 => {
-            b.GetComponents<Collider>().ForEach(c2 => {
-                IgnoreCollision(c1, c2, ignore);
-            });
-        });
-    }
-
-    public static List<T> GetComponentsInMyChildren<T>(this MonoBehaviour mb) where T : MonoBehaviour {
-        List<T> res = new List<T>();
-        foreach (Transform c in mb.transform) {
-            T component = c.GetComponent<T>();
-            if (component != null) {
-                res.Add(component);
-            }
-        }
-        return res;
-    }
-
-    public static int Modulo(int x, int y) {
-        return (x % y + y) % y;
-    }
-
     public static List<T> RndSelection<T>(this List<T> collection, int cnt) {
         if (cnt > collection.Count) {
             return collection;
@@ -247,6 +403,11 @@ public static class Extensions
     }
 
     public static Vector2 Scaled(this Vector2 v, Vector2 scale) {
+        v.Scale(scale);
+        return v;
+    }
+
+    public static Vector3 Scaled(this Vector3 v, Vector3 scale) {
         v.Scale(scale);
         return v;
     }
@@ -309,19 +470,7 @@ public static class Extensions
         }
     }
 
-    public static List<Transform> Children(this Transform t) {
-        List<Transform> res = new List<Transform>();
-        foreach (Transform c in t) {
-            res.Add(c);
-        }
-        return res;
-    }
-
-    public static float Direction(this Vector2 vector) {
-        return Mathf.Atan2(vector.y, vector.x) * Mathf.Rad2Deg;
-    }
-
-    public static T Rnd<T>(this List<T> collection) {
-        return collection[UnityEngine.Random.Range(0, collection.Count)];
+    public static float Part(this UnityEngine.UI.Slider slider) {
+        return (slider.value - slider.minValue) / (slider.maxValue - slider.minValue);
     }
 }

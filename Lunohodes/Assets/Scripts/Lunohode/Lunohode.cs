@@ -10,7 +10,6 @@ public class Lunohode : MonoBehaviour {
 
     public void Update() {
         if (Input.GetAxis("Horizontal") > 0) {
-            Debug.LogFormat("Hor > 0");
         }
     }
 
