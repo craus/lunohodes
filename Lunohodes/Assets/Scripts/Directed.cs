@@ -8,12 +8,17 @@ public class Directed : MonoBehaviour {
 
 	[ContextMenu("Direct")]
 	public void Direct() {
-		transform.eulerAngles = Vector3.up * 90 * direction;
+		transform.eulerAngles = Vector3.up * 90 * (1 - direction);
 	}
 
 	public void Update() {
 		if (Extensions.Editor()) {
 			Direct();
 		}
+	}
+
+	public void Rotate(int delta) {
+		direction += delta;
+		Direct();
 	}
 }

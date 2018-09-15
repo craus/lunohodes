@@ -10,6 +10,10 @@ using System.Linq;
 
 public static class Extensions
 {
+	public static T Instantiate<T>(T sample) where T : UnityEngine.Object {
+		return PrefabUtility.InstantiatePrefab(sample) as T;
+	}
+
 	public static void Destroy(GameObject go) {
 		if (Editor()) {
 			UnityEngine.GameObject.DestroyImmediate(go);

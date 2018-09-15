@@ -28,6 +28,15 @@ public class Figure : MonoBehaviour {
 			position.figures.Add(this);
 		}
 
-		transform.SetParent(position.transform, worldPositionStays: false);
+		if (position != null) {
+			transform.SetParent(position.transform, worldPositionStays: false);
+		}
+	}
+
+	public void Move(int direction, int dist = 1) {
+		Cell target = position.ToDirection(direction, dist);
+		if (target != null) {
+			Place(target);
+		}
 	}
 }
