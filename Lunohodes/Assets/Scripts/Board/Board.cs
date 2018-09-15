@@ -7,7 +7,6 @@ public class Board : MonoBehaviour {
 	public int n = 8;
     public int m = 9;
     public float size = 10;
-    public Cell cellSample;
     public Material white;
     public Material black;
 
@@ -37,12 +36,12 @@ public class Board : MonoBehaviour {
 		cells = new Cell[n, m];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                var cell = Instantiate(cellSample);
+				var cell = Extensions.Instantiate(Library.instance.cell);
 				cell.x = i;
 				cell.y = j;
 				cells[i, j] = cell;
 				cell.board = this;
-                cell.GetComponent<MeshRenderer>().sharedMaterial = (i + j) % 2 == 0 ? white : black;
+				cell.GetComponentInChildren<MeshRenderer>().sharedMaterial = (i + j) % 2 == 0 ? white : black;
                 cell.transform.position = new Vector3(size * i, 0, size*j);
                 cell.transform.SetParent(transform);
             }
