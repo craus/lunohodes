@@ -9,6 +9,7 @@ public class User : Singletone<User> {
 	public Lunohode current;
 
 	public Transform highlight;
+	public Transform selectedUnit;
 
 	public Cell hovered;
 
@@ -46,9 +47,15 @@ public class User : Singletone<User> {
 			current = lunohodes.CyclicNext(current);
 		}
 		CheckHovered();
+
 		if (hovered != null) {
 			highlight.position = hovered.transform.position;
 		}
 		highlight.gameObject.SetActive(hovered != null);
+
+		if (current != null) {
+			selectedUnit.position = current.figure.position.transform.position;
+		}
+		selectedUnit.gameObject.SetActive(current != null);
 	}
 }
