@@ -47,8 +47,11 @@ public class Board : MonoBehaviour {
             }
         }
 
-		var lunohode = Extensions.Instantiate(Library.instance.lunohode);
-		lunohode.figure.Place(cells[n / 2, m / 2]);
-		User.instance.current = lunohode;
+		for (int i = 0; i < 5; i++) {
+			var lunohode = Extensions.Instantiate(Library.instance.lunohode);
+			lunohode.figure.Place(Rand.rnd(cells, c => c.figures.Count == 0));
+			lunohode.directed.Direct(Random.Range(0, 4));
+			User.instance.current = lunohode;
+		}
     }
 }

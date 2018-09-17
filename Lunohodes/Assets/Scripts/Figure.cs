@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Figure : MonoBehaviour {
 	public Cell position;
@@ -33,9 +34,12 @@ public class Figure : MonoBehaviour {
 		}
 	}
 
-	public void Move(int direction, int dist = 1) {
+	public void Move(int direction, int dist = 1, Func<Cell, bool> condition = null) {
+		if (condition == null) {
+			condition = c => true;
+		}
 		Cell target = position.ToDirection(direction, dist);
-		if (target != null) {
+		if (target != null && condition(target)) {
 			Place(target);
 		}
 	}

@@ -11,6 +11,11 @@ public class Directed : MonoBehaviour {
 		transform.eulerAngles = Vector3.up * 90 * (1 - direction);
 	}
 
+	public void Direct(int direction) {
+		this.direction = direction;
+		Direct();
+	}
+
 	public void Update() {
 		if (Extensions.Editor()) {
 			Direct();
