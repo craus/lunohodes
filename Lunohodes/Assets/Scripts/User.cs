@@ -7,6 +7,8 @@ public class User : Singletone<User> {
 
 	public Lunohode current;
 
+	public Transform highlight;
+
 	public Cell hovered;
 
 	RaycastHit hit;
@@ -34,5 +36,9 @@ public class User : Singletone<User> {
 			current.directed.Rotate(1);
 		}
 		CheckHovered();
+		if (hovered != null) {
+			highlight.position = hovered.transform.position;
+		}
+		highlight.gameObject.SetActive(hovered != null);
 	}
 }
