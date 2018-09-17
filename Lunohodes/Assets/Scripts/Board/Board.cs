@@ -39,6 +39,7 @@ public class Board : MonoBehaviour {
 				var cell = Extensions.Instantiate(Library.instance.cell);
 				cell.x = i;
 				cell.y = j;
+				cell.gameObject.name = "Cell {0}, {1}".i(i, j);
 				cells[i, j] = cell;
 				cell.board = this;
 				cell.GetComponentInChildren<MeshRenderer>().sharedMaterial = (i + j) % 2 == 0 ? white : black;

@@ -3,7 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class User : Singletone<User> {
+	public new Camera camera;
+
 	public Lunohode current;
+
+	public Cell hovered;
+
+	RaycastHit hit;
+	public void CheckHovered() {
+		Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit);
+		Debug.LogFormat("collider = {0}", hit.collider);
+		if (hit.collider != null) {
+			hovered = hit.collider.GetComponentInParent<Cell>();
+		} else {
+			hovered = null;
+		}
+	}
 
 	public void Update() {
 		if (Input.GetButtonDown("Forward")) {
@@ -18,5 +33,6 @@ public class User : Singletone<User> {
 		if (Input.GetButtonDown("Left")) {
 			current.directed.Rotate(1);
 		}
+		CheckHovered();
 	}
 }
