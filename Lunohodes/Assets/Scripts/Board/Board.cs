@@ -52,6 +52,7 @@ public class Board : MonoBehaviour {
 			var lunohode = Extensions.Instantiate(Library.instance.lunohode);
 			lunohode.figure.Place(Rand.rnd(cells, c => c.figures.Count == 0));
 			lunohode.directed.Direct(Random.Range(0, 4));
+			lunohode.gameObject.name = "Lunohode #{0}".i(i);
 			User.instance.current = lunohode;
 		}
     }

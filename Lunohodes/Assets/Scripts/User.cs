@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class User : Singletone<User> {
 	public new Camera camera;
@@ -11,15 +12,20 @@ public class User : Singletone<User> {
 
 	public Cell hovered;
 
+	public List<Lunohode> lunohodes;
+
 	RaycastHit hit;
 	public void CheckHovered() {
 		Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit);
-		Debug.LogFormat("collider = {0}", hit.collider);
 		if (hit.collider != null) {
 			hovered = hit.collider.GetComponentInParent<Cell>();
 		} else {
 			hovered = null;
 		}
+	}
+
+	public void Start() {
+		lunohodes = FindObjectsOfType<Lunohode>().ToList();
 	}
 
 	public void Update() {
@@ -34,6 +40,10 @@ public class User : Singletone<User> {
 		}
 		if (Input.GetButtonDown("Left")) {
 			current.directed.Rotate(1);
+		}
+		if (Input.GetButtonDown("Next Lunohode")) {
+			Debug.LogFormat("Next Lunohode");
+			current = lunohodes.CyclicNext(current);
 		}
 		CheckHovered();
 		if (hovered != null) {
