@@ -43,8 +43,13 @@ public class User : Singletone<User> {
 			current.directed.Rotate(1);
 		}
 		if (Input.GetButtonDown("Next Lunohode")) {
-			Debug.LogFormat("Next Lunohode");
 			current = lunohodes.CyclicNext(current);
+		}
+		if (Input.GetMouseButtonDown(0)) {
+			var underCursor = lunohodes.FirstOrDefault(l => l.figure.position == hovered);
+			if (underCursor != null) {
+				current = underCursor;
+			}
 		}
 		CheckHovered();
 
