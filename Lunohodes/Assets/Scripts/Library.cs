@@ -6,6 +6,6 @@ using System.Linq;
 using System;
 
 public class Library : Singletone<Library> {
-	public Lunohode lunohode;
+	public Unit lunohode;
 	public Cell cell;
 }

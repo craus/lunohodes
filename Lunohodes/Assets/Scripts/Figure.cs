@@ -34,13 +34,15 @@ public class Figure : MonoBehaviour {
 		}
 	}
 
-	public void Move(int direction, int dist = 1, Func<Cell, bool> condition = null) {
+	public bool Move(int direction, int dist = 1, Func<Cell, bool> condition = null) {
 		if (condition == null) {
 			condition = c => true;
 		}
 		Cell target = position.ToDirection(direction, dist);
 		if (target != null && condition(target)) {
 			Place(target);
+			return true;
 		}
+		return false;
 	}
 }

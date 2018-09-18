@@ -989,7 +989,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1451892637422282}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000018238744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1, z: 1.0000005}
   m_Children:
@@ -2584,7 +2584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e58960ebb1c9cb4a8257824780a639b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: 0
+  direction: 43
 --- !u!114 &114278368705300252
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2598,6 +2598,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   figure: {fileID: 114130195886577352}
   directed: {fileID: 114152238741795704}
+  abilities:
+  - {fileID: 114497449406960196, guid: f35b709b8c000cb458bbbff1c012fc1b, type: 2}
+  - {fileID: 114131494183222876, guid: 3a4bfb7bdf368fc41aa932769363ea3a, type: 2}
+  - {fileID: 114343077440250466, guid: d0e1e4e6f0e1e5b48b6940d1c42e90b1, type: 2}
+  - {fileID: 114360395527636560, guid: b5887801bd74c884cb1edef622dc83a3, type: 2}
+  binds:
+  - {fileID: 114272938546286580, guid: f35b709b8c000cb458bbbff1c012fc1b, type: 2}
+  - {fileID: 114269761647695052, guid: 3a4bfb7bdf368fc41aa932769363ea3a, type: 2}
+  - {fileID: 114463426186034240, guid: d0e1e4e6f0e1e5b48b6940d1c42e90b1, type: 2}
+  - {fileID: 114060734474557118, guid: b5887801bd74c884cb1edef622dc83a3, type: 2}
+  energy: 0
   selectionAnimator: {fileID: 95605635532981402}
 --- !u!136 &136011015871260286
 CapsuleCollider:

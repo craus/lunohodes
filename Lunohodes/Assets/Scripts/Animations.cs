@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Animations : MonoBehaviour {
-    public Lunohode current;
+    public Unit current;
 }

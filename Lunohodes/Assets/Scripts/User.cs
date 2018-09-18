@@ -6,14 +6,16 @@ using System.Linq;
 public class User : Singletone<User> {
 	public new Camera camera;
 
-	public Lunohode current;
+	public Unit current;
 
 	public Transform highlight;
 	public Transform selectedUnit;
 
 	public Cell hovered;
 
-	public List<Lunohode> lunohodes;
+	public List<Unit> lunohodes;
+
+	public List<string> unitKeys;
 
 	RaycastHit hit;
 	public void CheckHovered() {
@@ -26,29 +28,27 @@ public class User : Singletone<User> {
 	}
 
 	public void Start() {
-		lunohodes = FindObjectsOfType<Lunohode>().ToList();
+		lunohodes = FindObjectsOfType<Unit>().ToList();
+	}
+
+	public void Select(Unit l) {
+		current = l;
+		l.StartMove();
 	}
 
 	public void Update() {
-		if (Input.GetButtonDown("Forward")) {
-			current.figure.Move(current.directed.direction, condition: c => c.figures.Count == 0);
-		}
-		if (Input.GetButtonDown("Backward")) {
-			current.figure.Move(current.directed.direction, -1, condition: c => c.figures.Count == 0);
-		}
-		if (Input.GetButtonDown("Right")) {
-			current.directed.Rotate(-1);
-		}
-		if (Input.GetButtonDown("Left")) {
-			current.directed.Rotate(1);
-		}
+		unitKeys.ForEach(key => {
+			if (Input.GetButtonDown(key)) {
+				current.OnKeyPress(key);
+			}
+		});
 		if (Input.GetButtonDown("Next Lunohode")) {
-			current = lunohodes.CyclicNext(current);
+			Select(lunohodes.CyclicNext(current));
 		}
 		if (Input.GetMouseButtonDown(0)) {
 			var underCursor = lunohodes.FirstOrDefault(l => l.figure.position == hovered);
 			if (underCursor != null) {
-				current = underCursor;
+				Select(underCursor);
 			}
 		}
 		CheckHovered();
