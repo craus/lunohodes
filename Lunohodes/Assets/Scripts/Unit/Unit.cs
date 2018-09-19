@@ -16,9 +16,15 @@ public class Unit : MonoBehaviour {
 	public int energy;
 	public int moves;
 
+	public void EndMove() {
+		energy = 0;
+	}
+
 	public void StartMove() {
 		moves--;
 		energy = Random.Range(1, 7);
+
+		owner.controller.StartUnitMove(this);
 	}
 
 	public Ability.Status OnKeyPress(string key) {

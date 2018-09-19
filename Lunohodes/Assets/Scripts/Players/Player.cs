@@ -10,9 +10,12 @@ public class Player : MonoBehaviour {
 
 	public void EndMove() {
 		FindObjectsOfType<Unit>().Where(u => u.owner == this).ForEach(u => u.moves = u.energy = 0);
+		controller.current = null;
 	}
 
 	public void StartMove() {
 		FindObjectsOfType<Unit>().Where(u => u.owner == this).ForEach(u => u.moves = 1);
+
+		controller.StartMove();
 	}
 }
