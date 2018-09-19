@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour {
+	public static List<Unit> all = new List<Unit>();
+
 	public Figure figure;
 	public Directed directed;
 
-	public List<Ability> abilities;
+	public List<Ability> abilities; 
 	public List<AbilityKeyBind> binds;
 
 	public Player owner;
@@ -39,5 +41,13 @@ public class Unit : MonoBehaviour {
 
 	public void Update() {
 		selectionAnimator.SetBool("Selected", owner.controller.current == this);
+	}
+
+	public void Start() {
+		all.Add(this);
+	}
+
+	public void OnDestroy() {
+		all.Remove(this);
 	}
 }

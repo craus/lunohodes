@@ -12,8 +12,6 @@ public class User : PlayerController {
 
 	public Cell hovered;
 
-	public List<Unit> lunohodes;
-
 	public List<string> unitKeys;
 
 	public UnityEvent onLowEnergy;
@@ -26,10 +24,6 @@ public class User : PlayerController {
 		} else {
 			hovered = null;
 		}
-	}
-
-	public void Start() {
-		lunohodes = FindObjectsOfType<Unit>().ToList();
 	}
 
 	public void Select(Unit l) {
@@ -46,11 +40,12 @@ public class User : PlayerController {
 				}
 			}
 		});
-		if (Input.GetButtonDown("Next Lunohode")) {
-			Select(lunohodes.CyclicNext(current));
+		if (Input.GetButtonDown("End Turn")) {
+			Debug.LogFormat("End Turn");
+			Game.instance.NextMove();
 		}
 		if (Input.GetMouseButtonDown(0)) {
-			var underCursor = lunohodes.FirstOrDefault(l => l.figure.position == hovered);
+			var underCursor = Unit.all.FirstOrDefault(l => l.figure.position == hovered);
 			if (underCursor != null && underCursor.moves > 0) {
 				Select(underCursor);
 			}

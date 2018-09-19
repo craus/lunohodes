@@ -10,10 +10,12 @@ public class Game : Singletone<Game> {
 	public Player mover;
 
 	public void NextMove() {
+		mover.EndMove();
 		mover = players.CyclicNext(mover);
+		mover.StartMove();
 	}
 
 	public void Start() {
-		FindObjectsOfType<Unit>().Where(u => u.owner == mover).ForEach(u => u.moves = 1);
+		mover.StartMove();
 	}
 }
