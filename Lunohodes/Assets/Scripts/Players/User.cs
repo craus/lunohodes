@@ -51,7 +51,7 @@ public class User : PlayerController {
 		}
 		if (Input.GetMouseButtonDown(0)) {
 			var underCursor = lunohodes.FirstOrDefault(l => l.figure.position == hovered);
-			if (underCursor != null) {
+			if (underCursor != null && underCursor.moves > 0) {
 				Select(underCursor);
 			}
 		}

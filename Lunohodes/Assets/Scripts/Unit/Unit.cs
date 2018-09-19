@@ -12,10 +12,14 @@ public class Unit : MonoBehaviour {
 	public Player owner;
 
 	public int energy;
+	public int moves;
+
+	public GameObject hasMovesMark;
 
 	public Animator selectionAnimator;
 
 	public void StartMove() {
+		moves--;
 		energy = Random.Range(1, 7);
 	}
 
