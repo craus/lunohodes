@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class User : PlayerController {
 	public new Camera camera;
 
+	public Player player;
+
 	public Transform highlight;
 	public Transform selectedUnit;
 
@@ -32,22 +34,24 @@ public class User : PlayerController {
 	}
 
 	public void Update() {
-		unitKeys.ForEach(key => {
-			if (Input.GetButtonDown(key)) {
-				var status = current.OnKeyPress(key);
-				if (status == Ability.Status.LowEnergy) {
-					onLowEnergy.Invoke();
+		if (player == Game.instance.mover) {
+			unitKeys.ForEach(key => {
+				if (Input.GetButtonDown(key)) {
+					var status = current.OnKeyPress(key);
+					if (status == Ability.Status.LowEnergy) {
+						onLowEnergy.Invoke();
+					}
 				}
+			});
+			if (Input.GetButtonDown("End Turn")) {
+				Debug.LogFormat("End Turn");
+				Game.instance.NextMove();
 			}
-		});
-		if (Input.GetButtonDown("End Turn")) {
-			Debug.LogFormat("End Turn");
-			Game.instance.NextMove();
-		}
-		if (Input.GetMouseButtonDown(0)) {
-			var underCursor = Unit.all.FirstOrDefault(l => l.figure.position == hovered);
-			if (underCursor != null && underCursor.moves > 0) {
-				Select(underCursor);
+			if (Input.GetMouseButtonDown(0)) {
+				var underCursor = Unit.all.FirstOrDefault(l => l.figure.position == hovered);
+				if (underCursor != null && underCursor.moves > 0) {
+					Select(underCursor);
+				}
 			}
 		}
 		CheckHovered();

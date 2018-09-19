@@ -16,10 +16,6 @@ public class Unit : MonoBehaviour {
 	public int energy;
 	public int moves;
 
-	public GameObject hasMovesMark;
-
-	public Animator selectionAnimator;
-
 	public void StartMove() {
 		moves--;
 		energy = Random.Range(1, 7);
@@ -37,10 +33,6 @@ public class Unit : MonoBehaviour {
 			}
 		});
 		return result;
-	}
-
-	public void Update() {
-		selectionAnimator.SetBool("Selected", owner.controller.current == this);
 	}
 
 	public void Start() {

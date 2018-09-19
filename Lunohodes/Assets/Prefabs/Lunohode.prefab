@@ -404,6 +404,7 @@ GameObject:
   - component: {fileID: 114152238741795704}
   - component: {fileID: 114130195886577352}
   - component: {fileID: 95605635532981402}
+  - component: {fileID: 114641115058707396}
   m_Layer: 0
   m_Name: Lunohode
   m_TagString: Untagged
@@ -2703,8 +2704,19 @@ MonoBehaviour:
   owner: {fileID: 0}
   energy: 0
   moves: 0
-  hasMovesMark: {fileID: 1374032283099398}
-  selectionAnimator: {fileID: 95605635532981402}
+--- !u!114 &114641115058707396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1451892637422282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc93df1ebfa8104f84e26485335524a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95605635532981402}
+  unit: {fileID: 114278368705300252}
 --- !u!136 &136011015871260286
 CapsuleCollider:
   m_ObjectHideFlags: 1
