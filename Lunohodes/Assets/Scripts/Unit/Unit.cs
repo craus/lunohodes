@@ -17,8 +17,18 @@ public class Unit : MonoBehaviour {
 		energy = Random.Range(1, 7);
 	}
 
-	public void OnKeyPress(string key) {
-		binds.ForEach(b => b.OnKeyPress(this, key));
+	public Ability.Status OnKeyPress(string key) {
+		var result = Ability.Status.Default;
+		binds.ForEach(b => {
+			if (b.key == key) {
+				var status = b.ability.GetStatus(this);
+				if (status == Ability.Status.Usable) {
+					b.ability.Use(this);
+				}
+				result = status;
+			}
+		});
+		return result;
 	}
 
 	public void Update() {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 
 public class User : Singletone<User> {
 	public new Camera camera;
@@ -16,6 +17,8 @@ public class User : Singletone<User> {
 	public List<Unit> lunohodes;
 
 	public List<string> unitKeys;
+
+	public UnityEvent onLowEnergy;
 
 	RaycastHit hit;
 	public void CheckHovered() {
@@ -39,7 +42,10 @@ public class User : Singletone<User> {
 	public void Update() {
 		unitKeys.ForEach(key => {
 			if (Input.GetButtonDown(key)) {
-				current.OnKeyPress(key);
+				var status = current.OnKeyPress(key);
+				if (status == Ability.Status.LowEnergy) {
+					onLowEnergy.Invoke();
+				}
 			}
 		});
 		if (Input.GetButtonDown("Next Lunohode")) {

@@ -1604,6 +1604,22 @@ MonoBehaviour:
   - Backward
   - Left
   - Right
+  onLowEnergy:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1597721783}
+        m_MethodName: OnLowEnergy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!4 &341634679 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4149774235938484, guid: 7fb7e8e182ba63d4ba76ec0024baa0ce,
@@ -7039,8 +7055,9 @@ GameObject:
   - component: {fileID: 1597721785}
   - component: {fileID: 1597721784}
   - component: {fileID: 1597721783}
+  - component: {fileID: 1597721786}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Energy Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7084,6 +7101,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ada2a16bbc44db04ea9cf119e41f0b87, type: 3}
   - {fileID: 21300000, guid: c271906cbbc08394ca1d78570c2195da, type: 3}
   image: {fileID: 1597721784}
+  lowEnergy: {fileID: 1597721786}
 --- !u!114 &1597721784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7117,6 +7135,23 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1597721781}
+--- !u!95 &1597721786
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1597721781}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 252e789b1b1ba2e4e918fe86c4535453, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &1606642315
 Prefab:
   m_ObjectHideFlags: 0
