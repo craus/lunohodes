@@ -9,6 +9,8 @@ public class Unit : MonoBehaviour {
 	public List<Ability> abilities;
 	public List<AbilityKeyBind> binds;
 
+	public Player owner;
+
 	public int energy;
 
 	public Animator selectionAnimator;
@@ -32,6 +34,6 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Update() {
-		selectionAnimator.SetBool("Selected", User.instance.current == this);
+		selectionAnimator.SetBool("Selected", owner.controller.current == this);
 	}
 }

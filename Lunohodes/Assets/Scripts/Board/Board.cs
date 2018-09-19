@@ -48,12 +48,15 @@ public class Board : MonoBehaviour {
             }
         }
 
-		for (int i = 0; i < 5; i++) {
-			var lunohode = Extensions.Instantiate(Library.instance.lunohode);
-			lunohode.figure.Place(Rand.rnd(cells, c => c.figures.Count == 0));
-			lunohode.directed.Direct(Random.Range(0, 4));
-			lunohode.gameObject.name = "Lunohode #{0}".i(i);
-			User.instance.current = lunohode;
+		foreach (Player p in Game.instance.players) {
+			for (int i = 0; i < 4; i++) {
+				var lunohode = Extensions.Instantiate(Library.instance.lunohode);
+				lunohode.transform.position = Vector3.zero;
+				lunohode.figure.Place(Rand.rnd(cells, c => c.figures.Count == 0));
+				lunohode.directed.Direct(Random.Range(0, 4));
+				lunohode.gameObject.name = "Lunohode #{0} ({1})".i(i, p.name);
+				lunohode.owner = p;
+			}
 		}
     }
 }

@@ -4,10 +4,8 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
 
-public class User : Singletone<User> {
+public class User : PlayerController {
 	public new Camera camera;
-
-	public Unit current;
 
 	public Transform highlight;
 	public Transform selectedUnit;

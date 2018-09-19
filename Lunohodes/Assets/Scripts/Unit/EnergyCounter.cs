@@ -10,9 +10,13 @@ public class EnergyCounter : MonoBehaviour {
 
 	public Animator lowEnergy;
 
+	public User user;
+
 	public void Update() {
-		image.enabled = User.instance.current != null;
-		image.sprite = numberSprites[Mathf.Clamp(User.instance.current.energy, 0, numberSprites.Count-1)];
+		image.enabled = user != null && user.current != null;
+		if (image.enabled) {
+			image.sprite = numberSprites[Mathf.Clamp(user.current.energy, 0, numberSprites.Count - 1)];
+		}
 	}
 
 	public void OnLowEnergy() {
