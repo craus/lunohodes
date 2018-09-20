@@ -10,4 +10,7 @@ public abstract class AbilityEffect : MonoBehaviour {
 
 	public virtual void Use(Unit unit) {
 	}
+
+	public virtual void CellClicked(Unit unit, Cell cell) {
+	}
 }

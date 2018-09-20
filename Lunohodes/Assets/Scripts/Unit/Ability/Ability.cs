@@ -12,6 +12,7 @@ public class Ability : MonoBehaviour {
 		Default,
 		Usable,
 		Unusable,
+		UnitBusy,
 		LowEnergy
 	}
 
@@ -20,6 +21,8 @@ public class Ability : MonoBehaviour {
 	public Status GetStatus(Unit unit) {
 		if (!effects.Any(e => e.Usable(unit))) {
 			return Status.Unusable;
+		}
+		if (unit.abilityEffectInProgress != null) {
 		}
 		if (unit.energy < cost) {
 			return Status.LowEnergy;

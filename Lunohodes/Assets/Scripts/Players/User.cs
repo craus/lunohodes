@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class User : PlayerController {
 	public new Camera camera;
 
+	public static User instance;
+
 	public Transform highlight;
 	public Transform selectedUnit;
 
@@ -15,6 +17,10 @@ public class User : PlayerController {
 	public List<string> unitKeys;
 
 	public UnityEvent onLowEnergy;
+
+	public void Awake() {
+		instance = this;
+	}
 
 	RaycastHit hit;
 	public void CheckHovered() {
@@ -41,6 +47,9 @@ public class User : PlayerController {
 				Game.instance.NextMove();
 			}
 			if (Input.GetMouseButtonDown(0)) {
+				if (current != null) {
+					current.CellClicked(hovered);
+				}
 				var underCursor = Unit.all.FirstOrDefault(l => l.figure.position == hovered);
 				if (underCursor != null && underCursor.moves > 0) {
 					Select(underCursor);

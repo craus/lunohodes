@@ -11,6 +11,8 @@ public class Unit : MonoBehaviour {
 	public List<Ability> abilities; 
 	public List<AbilityKeyBind> binds;
 
+	public AbilityEffect abilityEffectInProgress;
+
 	public Player owner;
 
 	public int energy;
@@ -39,6 +41,12 @@ public class Unit : MonoBehaviour {
 			}
 		});
 		return result;
+	}
+
+	public void CellClicked(Cell cell) {
+		if (abilityEffectInProgress != null) {
+			abilityEffectInProgress.CellClicked(this, cell);
+		}
 	}
 
 	public void Start() {
