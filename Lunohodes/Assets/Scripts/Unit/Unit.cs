@@ -7,6 +7,9 @@ public class Unit : MonoBehaviour {
 
 	public Figure figure;
 	public Directed directed;
+	public Health health;
+
+	[Space]
 
 	public List<Ability> abilities; 
 	public List<AbilityKeyBind> binds;

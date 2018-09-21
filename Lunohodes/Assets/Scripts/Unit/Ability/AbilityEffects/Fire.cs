@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Fire : AbilityEffect {
 	public bool firing = false;
@@ -23,6 +24,12 @@ public class Fire : AbilityEffect {
 
 	public override void CellClicked(Unit unit, Cell cell) {
 		FinishFire(unit);
+		var targetFigure = cell.figures.FirstOrDefault(f => f.GetComponent<Unit>() != null);
+		if (targetFigure == null) {
+			return;
+		}
+		var target = targetFigure.GetComponent<Unit>();
+		target.health.Hit(1);
 	}
 
 	public void FinishFire(Unit unit) {
