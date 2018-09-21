@@ -3,11 +3,11 @@ Shader "Sprites/Recolor"
 	Properties
 	{
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
-		_Red ("Red", Color) = (1,0.5,0.5,0.5)
-		_Green ("Green", Color) = (0.5,1,0.5,0.5)
-		_Blue ("Blue", Color) = (0.5,0.5,1,0.5)
-		_Alpha ("Alpha", Color) = (0.5,0.5,0.5,1)
-		_Const ("Const", Color) = (0.5,0.5,0.5,0.5)
+		_Red ("Red", Vector) = (1,0,0,0)
+		_Green ("Green", Vector) = (0,1,0,0)
+		_Blue ("Blue", Vector) = (0,0,1,0)
+		_Alpha ("Alpha", Vector) = (0,0,0,1)
+		_Const ("Const", Vector) = (0,0,0,0)
 		[MaterialToggle] PixelSnap ("Pixel snap", Float) = 0
 	}
 
@@ -92,8 +92,7 @@ Shader "Sprites/Recolor"
 			fixed4 frag(v2f IN) : SV_Target
 			{
 				fixed4 d = SampleSpriteTexture (IN.texcoord);
-				fixed4 c = (_Const-0.5) + d.r * (_Red-0.5) + d.g * (_Green-0.5) + d.b * (_Blue-0.5) + d.a * (_Alpha-0.5);
-		        c = c * 2;
+				fixed4 c = _Const + d.r * _Red + d.g * _Green + d.b * _Blue + d.a * _Alpha;
 		        c.a *= d.a;
 		        c.rgb *= c.a;
 				return c * IN.color;

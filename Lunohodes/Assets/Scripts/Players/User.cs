@@ -15,6 +15,12 @@ public class User : PlayerController {
 	public Cell hovered;
 	public int hoveredDirection;
 
+	public Position hoveredPosition {
+		get {
+			return new Position(hovered, hoveredDirection);
+		}
+	}
+
 	public List<string> unitKeys;
 
 	public LayerMask cellsMask;

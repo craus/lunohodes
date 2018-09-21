@@ -8,6 +8,7 @@ public class Unit : MonoBehaviour {
 	public Directed directed;
 	public Health health;
 	public PathFinder pathFinder;
+	public GhostBody ghostBody;
 
 	[Space]
 

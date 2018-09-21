@@ -5749,6 +5749,7 @@ MonoBehaviour:
   directed: {fileID: 114152238741795704}
   health: {fileID: 114962776463112646}
   pathFinder: {fileID: 114578683369190710}
+  ghostBody: {fileID: 114746959915246734}
   abilities:
   - {fileID: 114235039675573254}
   - {fileID: 114188981516982176}

@@ -32,7 +32,8 @@ public class GhostBody : MonoBehaviour {
 			if (
 				unit.owner.user != null &&
 				unit.owner.user.current == unit &&
-				unit.pathFinder.Available(unit.owner.user.hovered)
+				unit.owner.user.hovered != null &&
+				unit.pathFinder.Available(unit.owner.user.hoveredPosition)
 			) {
 				ghostBody.gameObject.SetActive(true);
 				ghostBody.position = unit.owner.user.hovered.transform.position;
