@@ -25,6 +25,15 @@ public class RandomBot : PlayerController {
 			if (Time.time > lastActionTime + deltaActionTime) {
 				var movingUnit = Unit.all.FirstOrDefault(u => u.energy != 0);
 				if (movingUnit != null) {
+					if (movingUnit.abilityEffectInProgress != null) {
+						if (movingUnit.abilityEffectInProgress.GetStatus(movingUnit) == AbilityEffect.Status.WaitingCell) {
+							movingUnit.abilityEffectInProgress.CellClicked(
+								movingUnit, 
+								movingUnit.abilityEffectInProgress.possibleTargets.rnd()
+							);
+						}
+					}
+
 					var ability = movingUnit.abilities.Where(a => a.GetStatus(movingUnit) == Ability.Status.Usable).ToList().rnd();
 					if (ability != null) {
 						ability.Use(movingUnit);
@@ -35,7 +44,7 @@ public class RandomBot : PlayerController {
 
 				movingUnit = Unit.all.Where(u => u.moves > 0).ToList().rnd();
 				if (movingUnit == null) {
-					Game.instance.NextMove();
+					FinishMove();
 					Act();
 					return;
 				} 

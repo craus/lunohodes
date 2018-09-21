@@ -45,4 +45,8 @@ public class Figure : MonoBehaviour {
 		}
 		return false;
 	}
+
+	public void OnDestroy() {
+		Leave();
+	}
 }

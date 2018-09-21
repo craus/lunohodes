@@ -8,7 +8,13 @@ public class Fire : AbilityEffect {
 	public bool firing = false;
 	public int distance;
 
-	public List<Cell> possibleTargets;
+
+	public override Status GetStatus(Unit unit) {
+		if (firing) {
+			return Status.WaitingCell;
+		}
+		return Status.Usable;
+	}
 
 	public override void Use(Unit unit) {
 		firing = true;
@@ -35,6 +41,11 @@ public class Fire : AbilityEffect {
 	public void FinishFire(Unit unit) {
 		firing = false;
 		unit.abilityEffectInProgress = null;
+		possibleTargets.Clear();
 		distance = 0;
+	}
+
+	public override void Interrupt(Unit unit) {
+		FinishFire(unit);
 	}
 }

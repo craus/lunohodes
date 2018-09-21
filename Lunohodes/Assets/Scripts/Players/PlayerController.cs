@@ -12,6 +12,10 @@ public abstract class PlayerController : MonoBehaviour {
 	public virtual void StartMove() {
 	}
 
+	public void FinishMove() {
+		Game.instance.NextMove();
+	}
+
 	public virtual void StartUnitMove(Unit unit) {
 	}
 

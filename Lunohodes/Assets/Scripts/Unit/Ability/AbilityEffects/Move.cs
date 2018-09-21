@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Move : AbilityEffect {
 	public PositionFinder positionFinder;
 
-	public override bool Usable(Unit unit) {
+	public override Status GetStatus(Unit unit) {
 		var cell = positionFinder.Position(unit);
-		return cell != null && cell.figures.Count == 0;
+		return cell != null && cell.figures.Count == 0 ? Status.Usable : Status.Unusable;
 	}
 
 	public override void Use(Unit unit) {

@@ -23,6 +23,9 @@ public class Unit : MonoBehaviour {
 
 	public void EndMove() {
 		energy = 0;
+		if (abilityEffectInProgress != null) {
+			abilityEffectInProgress.Interrupt(this);
+		}
 	}
 
 	public void StartMove() {
@@ -33,6 +36,9 @@ public class Unit : MonoBehaviour {
 	}
 
 	public Ability.Status OnKeyPress(string key) {
+		if (abilityEffectInProgress != null) {
+			return Ability.Status.Unusable;
+		}
 		var result = Ability.Status.Default;
 		binds.ForEach(b => {
 			if (b.key == key) {

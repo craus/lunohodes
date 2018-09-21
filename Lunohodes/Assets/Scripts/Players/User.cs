@@ -44,7 +44,7 @@ public class User : PlayerController {
 			});
 			if (Input.GetButtonDown("End Turn")) {
 				Debug.LogFormat("End Turn");
-				Game.instance.NextMove();
+				FinishMove();
 			}
 			if (Input.GetMouseButtonDown(0)) {
 				if (current != null) {

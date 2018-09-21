@@ -19,7 +19,10 @@ public class Ability : MonoBehaviour {
 	public int cost;
 
 	public Status GetStatus(Unit unit) {
-		if (!effects.Any(e => e.Usable(unit))) {
+		if (unit.abilityEffectInProgress != null) {
+			return Status.UnitBusy;
+		}
+		if (!effects.Any(e => e.GetStatus(unit) == AbilityEffect.Status.Usable)) {
 			return Status.Unusable;
 		}
 		if (unit.abilityEffectInProgress != null) {
