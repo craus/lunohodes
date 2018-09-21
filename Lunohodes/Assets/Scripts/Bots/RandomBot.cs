@@ -9,14 +9,14 @@ public class RandomBot : PlayerController {
 	public float deltaActionTime = 0.25f;
 
 	public override void StartMove() {
-		Act();
+		Pause();
 	}
 
 	public override void StartUnitMove(Unit unit) {
-		Act();
+		Pause();
 	}
 
-	public void Act() {
+	public void Pause() {
 		lastActionTime = Time.time;
 	}
 
@@ -37,7 +37,7 @@ public class RandomBot : PlayerController {
 					var ability = movingUnit.abilities.Where(a => a.GetStatus(movingUnit) == Ability.Status.Usable).ToList().rnd();
 					if (ability != null) {
 						ability.Use(movingUnit);
-						Act();
+						Pause();
 						return;
 					}
 				}
@@ -45,11 +45,11 @@ public class RandomBot : PlayerController {
 				movingUnit = Game.instance.units.Where(u => u.moves > 0).ToList().rnd();
 				if (movingUnit == null) {
 					FinishMove();
-					Act();
+					Pause();
 					return;
 				} 
 				Select(movingUnit);
-				Act();
+				Pause();
 			}
 		}
 	}

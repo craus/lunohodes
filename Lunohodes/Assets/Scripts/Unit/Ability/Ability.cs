@@ -7,6 +7,14 @@ using System.Linq;
 public class Ability : MonoBehaviour {
 	public List<AbilityEffect> effects;
 
+	public bool IsRepositioning() {
+		return effects.Any(e => e is RepositioningEffect);
+	}
+
+	public Position To(Position from) {
+		return (effects.First(e => e is RepositioningEffect) as RepositioningEffect).To(from);
+	}
+
 	public enum Status
 	{
 		Default,

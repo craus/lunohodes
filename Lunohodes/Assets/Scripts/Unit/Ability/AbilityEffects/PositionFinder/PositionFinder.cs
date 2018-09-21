@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public abstract class PositionFinder : MonoBehaviour {
-	public virtual Cell Position(Unit unit) {
+	public virtual Cell Position(Position position) {
 		return null;
 	}
 }

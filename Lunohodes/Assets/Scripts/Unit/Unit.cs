@@ -20,6 +20,12 @@ public class Unit : MonoBehaviour {
 	public int energy;
 	public int moves;
 
+	public Position Position {
+		get {
+			return new Position(figure.position, directed.direction);
+		}
+	}
+
 	public void EndMove() {
 		energy = 0;
 		if (abilityEffectInProgress != null) {
