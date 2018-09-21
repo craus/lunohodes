@@ -13,8 +13,11 @@ public class User : PlayerController {
 	public Transform selectedUnit;
 
 	public Cell hovered;
+	public int hoveredDirection;
 
 	public List<string> unitKeys;
+
+	public LayerMask cellsMask;
 
 	public UnityEvent onLowEnergy;
 
@@ -22,11 +25,31 @@ public class User : PlayerController {
 		instance = this;
 	}
 
+	public int PointDirection(Vector3 localCellPoint) {
+		if (Mathf.Abs(localCellPoint.x) > Mathf.Abs(localCellPoint.z)) {
+			if (localCellPoint.x < 0) {
+				return 2;
+			} else {
+				return 0;
+			}
+		} else {
+			if (localCellPoint.z < 0) {
+				return 3;
+			} else {
+				return 1;
+			}
+		}
+	}
+
 	RaycastHit hit;
 	public void CheckHovered() {
-		Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit);
+		Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, float.PositiveInfinity, cellsMask);
 		if (hit.collider != null) {
 			hovered = hit.collider.GetComponentInParent<Cell>();
+			if (hovered != null) {
+				var localHitPoint = hovered.transform.InverseTransformPoint(hit.point);
+				hoveredDirection = PointDirection(localHitPoint);
+			}
 		} else {
 			hovered = null;
 		}

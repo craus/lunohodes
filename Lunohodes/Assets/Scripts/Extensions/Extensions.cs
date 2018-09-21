@@ -10,6 +10,15 @@ using System.Linq;
 
 public static class Extensions
 {
+	public static Material GetMaterial(this Renderer renderer) {
+		if (Extensions.Editor()) {
+			renderer.sharedMaterial = new Material(renderer.sharedMaterial);
+			return renderer.sharedMaterial;
+		} else {
+			return renderer.material;
+		}
+	}
+
 	public static T Instantiate<T>(T sample) where T : UnityEngine.Object {
 		return PrefabUtility.InstantiatePrefab(sample) as T;
 	}

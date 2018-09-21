@@ -5,8 +5,14 @@ using System.Linq;
 using UnityEngine.Events;
 
 public class Player : MonoBehaviour {
-	public Material flagMaterial;
+	public Color color;
 	public PlayerController controller;
+
+	public User user {
+		get {
+			return controller as User;
+		}
+	}
 
 	public void EndMove() {
 		FindObjectsOfType<Unit>().Where(u => u.owner == this).ForEach(u => u.moves = u.energy = 0);

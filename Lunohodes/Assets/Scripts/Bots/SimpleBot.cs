@@ -21,25 +21,13 @@ public class SimpleBot : PlayerController {
 		lastActionTime = Time.time;
 	}
 
-	public List<Pair<Position, int>> PossibleMoves(Position pos) {
-		var result = new List<Pair<Position, int>>();
-		current.abilities.ForEach(a => {
-			if (a.IsRepositioning()) {
-				var to = a.To(pos);
-				if (to != null) {
-					result.Add(new Pair<Position, int>(to, a.cost));
-				}
-			}
-		});
-		return result;
-	}
 
 	public Map<Position, int> Distances() {
 		Map<Position, int> result = new Map<Position, int>();
 		Algorithms.Dijkstra(
 			result, 
 			new Position(current.figure.position, current.directed.direction),
-			PossibleMoves
+			p => LunohodeAlgorithms.PossibleMoves(current, p)
 		);
 		return result;
 	}

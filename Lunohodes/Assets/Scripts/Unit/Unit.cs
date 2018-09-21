@@ -7,6 +7,7 @@ public class Unit : MonoBehaviour {
 	public Figure figure;
 	public Directed directed;
 	public Health health;
+	public PathFinder pathFinder;
 
 	[Space]
 
@@ -38,6 +39,8 @@ public class Unit : MonoBehaviour {
 		energy = Random.Range(1, 7);
 
 		owner.controller.StartUnitMove(this);
+
+		pathFinder.UpdateMap();
 	}
 
 	public Ability.Status OnKeyPress(string key) {
@@ -50,6 +53,7 @@ public class Unit : MonoBehaviour {
 				var status = b.ability.GetStatus(this);
 				if (status == Ability.Status.Usable) {
 					b.ability.Use(this);
+					pathFinder.UpdateMap();
 				}
 				result = status;
 			}
@@ -60,6 +64,7 @@ public class Unit : MonoBehaviour {
 	public void CellClicked(Cell cell) {
 		if (abilityEffectInProgress != null) {
 			abilityEffectInProgress.CellClicked(this, cell);
+			pathFinder.UpdateMap();
 		}
 	}
 

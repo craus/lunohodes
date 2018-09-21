@@ -10,16 +10,10 @@ public class EnergyCounter : MonoBehaviour {
 
 	public Animator lowEnergy;
 
-	public User user {
-		get {
-			return Game.instance.mover.controller as User;
-		}
-	}
-
 	public void Update() {
-		image.enabled = user != null && user.current != null;
+		image.enabled = Game.instance.mover.user != null && Game.instance.mover.user.current != null;
 		if (image.enabled) {
-			image.sprite = numberSprites[Mathf.Clamp(user.current.energy, 0, numberSprites.Count - 1)];
+			image.sprite = numberSprites[Mathf.Clamp(Game.instance.mover.user.current.energy, 0, numberSprites.Count - 1)];
 		}
 	}
 

@@ -9,9 +9,12 @@ public class OwnerFlag : MonoBehaviour {
 	public Unit unit;
 	public List<MeshRenderer> renderers;
 
-	public void Start() {
+	public void Apply() {
+		Debug.LogFormat("Apply");
 		if (unit != null && unit.owner != null) {
-			renderers.ForEach(r => r.sharedMaterial = unit.owner.flagMaterial);
+			var material = new Material(renderers[0].sharedMaterial);
+			material.color = unit.owner.color;
+			renderers.ForEach(r => r.sharedMaterial = material);
 		}
 	}
 }

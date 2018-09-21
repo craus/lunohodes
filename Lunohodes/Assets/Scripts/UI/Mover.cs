@@ -8,6 +8,6 @@ using UnityEngine.UI;
 public class Mover : MonoBehaviour {
 	public Image image;
 	public void Update() {
-		image.color = Game.instance.mover.flagMaterial.color;
+		image.color = Game.instance.mover.color;
 	}
 }
