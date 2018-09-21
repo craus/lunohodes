@@ -29,6 +29,9 @@ public class Fire : AbilityEffect {
 	}
 
 	public override void CellClicked(Unit unit, Cell cell) {
+		if (!possibleTargets.Contains(cell)) {
+			return;
+		}
 		FinishFire(unit);
 		var targetFigure = cell.figures.FirstOrDefault(f => f.GetComponent<Unit>() != null);
 		if (targetFigure == null) {
