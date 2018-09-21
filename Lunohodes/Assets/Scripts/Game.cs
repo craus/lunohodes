@@ -22,4 +22,10 @@ public class Game : Singletone<Game> {
 		units.AddRange(FindObjectsOfType<Unit>());
 		mover.StartMove();
 	}
+
+	public void Update() {
+		if (!units.Any(u => u.owner == mover && (u.moves > 0 || u.energy > 0 || u.abilityEffectInProgress != null))) {
+			NextMove();
+		}
+	}
 }

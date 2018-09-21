@@ -10,7 +10,11 @@ public class EnergyCounter : MonoBehaviour {
 
 	public Animator lowEnergy;
 
-	public User user;
+	public User user {
+		get {
+			return Game.instance.mover.controller as User;
+		}
+	}
 
 	public void Update() {
 		image.enabled = user != null && user.current != null;
