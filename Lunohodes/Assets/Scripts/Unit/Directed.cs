@@ -5,6 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Directed : MonoBehaviour {
 	public int direction;
+	public const int DIRECTIONS = 4;
 
 	[ContextMenu("Direct")]
 	public void Direct() {
@@ -24,6 +25,7 @@ public class Directed : MonoBehaviour {
 
 	public void Rotate(int delta) {
 		direction += delta;
+		direction = direction.modulo(DIRECTIONS);
 		Direct();
 	}
 }

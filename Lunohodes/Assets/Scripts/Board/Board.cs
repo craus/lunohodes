@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class Board : MonoBehaviour {
+public class Board : Singletone<Board> {
 	public int n = 8;
     public int m = 9;
     public float size = 10;
@@ -25,7 +25,7 @@ public class Board : MonoBehaviour {
 		Game.instance.Start();
 	}
 
-	void RestoreCells() {
+	public void RestoreCells() {
 		cells = new Cell[n, m];
 		FindObjectsOfType<Cell>().ForEach(c => cells[c.x, c.y] = c);
 	}

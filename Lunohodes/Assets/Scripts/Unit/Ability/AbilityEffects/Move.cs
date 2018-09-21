@@ -6,9 +6,13 @@ using UnityEngine.UI;
 public class Move : AbilityEffect, RepositioningEffect {
 	public PositionFinder positionFinder;
 
+	public bool Occupied(Cell cell) {
+		return cell.figures.Count > 0;
+	}
+
 	public override Status GetStatus(Unit unit) {
 		var cell = positionFinder.Position(unit.Position);
-		return cell != null && cell.figures.Count == 0 ? Status.Usable : Status.Unusable;
+		return cell != null && !Occupied(cell) ? Status.Usable : Status.Unusable;
 	}
 
 	public override void Use(Unit unit) {
@@ -16,6 +20,10 @@ public class Move : AbilityEffect, RepositioningEffect {
 	}
 
 	public Position To(Position from) {
-		return new Position(positionFinder.Position(from), from.direction);
+		var cell = positionFinder.Position(from);
+		if (cell == null || Occupied(cell)) {
+			return null;
+		}
+		return new Position(cell, from.direction);
 	}
 }

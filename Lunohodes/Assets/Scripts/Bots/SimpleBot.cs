@@ -25,7 +25,10 @@ public class SimpleBot : PlayerController {
 		var result = new List<Pair<Position, int>>();
 		current.abilities.ForEach(a => {
 			if (a.IsRepositioning()) {
-				result.Add(new Pair<Position, int>(a.To(pos), a.cost));
+				var to = a.To(pos);
+				if (to != null) {
+					result.Add(new Pair<Position, int>(to, a.cost));
+				}
 			}
 		});
 		return result;
@@ -41,7 +44,9 @@ public class SimpleBot : PlayerController {
 		return result;
 	}
 
+	[ContextMenu("Print Distances")]
 	public void PrintDistances() {
+		Board.instance.RestoreCells();
 		Debug.LogFormat("Distances: {0}", Distances().ExtToString()); 
 	}
 

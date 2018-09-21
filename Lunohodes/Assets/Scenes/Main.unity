@@ -735,7 +735,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1528136426}
+  - {fileID: 658860159}
   m_Father: {fileID: 857152431}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -751,7 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flagMaterial: {fileID: 2100000, guid: 64eb70db1e0aa3f4bab8f8301c20bfe5, type: 2}
-  controller: {fileID: 1528136427}
+  controller: {fileID: 658860160}
 --- !u!1 &150445438
 GameObject:
   m_ObjectHideFlags: 0
@@ -795,6 +795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59392d805658e408e720a3623e335b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  units: []
   players:
   - {fileID: 442092457}
   - {fileID: 142440687}
@@ -3077,6 +3078,50 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7fb7e8e182ba63d4ba76ec0024baa0ce, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &658860158
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 658860159}
+  - component: {fileID: 658860160}
+  m_Layer: 0
+  m_Name: Simple Bot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &658860159
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 658860158}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 142440686}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &658860160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 658860158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb117b287d442749b45445c828c91ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 142440687}
+  current: {fileID: 1511041221}
+  lastActionTime: 0
+  deltaActionTime: 0.25
 --- !u!4 &673369556 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4149774235938484, guid: 7fb7e8e182ba63d4ba76ec0024baa0ce,
@@ -6358,6 +6403,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7fb7e8e182ba63d4ba76ec0024baa0ce, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1511041221 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114278368705300252, guid: d92ff88fb504602409dc57aaf6077c26,
+    type: 2}
+  m_PrefabInternal: {fileID: 511308931}
+  m_Script: {fileID: 11500000, guid: 3eb19c8940561924e8097ef449897c42, type: 3}
 --- !u!114 &1511041223 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114130195886577352, guid: d92ff88fb504602409dc57aaf6077c26,
@@ -6369,50 +6420,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4149774235938484, guid: 7fb7e8e182ba63d4ba76ec0024baa0ce,
     type: 2}
   m_PrefabInternal: {fileID: 34760975}
---- !u!1 &1528136425
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1528136426}
-  - component: {fileID: 1528136427}
-  m_Layer: 0
-  m_Name: Random Bot
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1528136426
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1528136425}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 142440686}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1528136427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1528136425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2ac8b8bbcd89ae44fa4ae561f5b51b2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 142440687}
-  current: {fileID: 0}
-  lastActionTime: 0
-  deltaActionTime: 0.25
 --- !u!114 &1529109852 stripped
 MonoBehaviour:
   m_PrefabParentObject: {fileID: 114130195886577352, guid: d92ff88fb504602409dc57aaf6077c26,

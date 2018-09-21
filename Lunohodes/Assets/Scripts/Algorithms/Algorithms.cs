@@ -26,13 +26,17 @@ public class Algorithms
 		StateType start, 
 		Func<StateType, IEnumerable<Pair<StateType, int>>> getNextStates
 	) {
-		var queue = new PriorityQueue<Pair<StateType, int>>(less: (a,b) => a.second > b.second);
+		var queue = new PriorityQueue<Pair<StateType, int>>(less: (a,b) => a.second < b.second);
 		queue.Enqueue(new Pair<StateType, int>(start, 0));
-		reachedStates.Add(start, 0);
 
 		var distances = new Map<StateType, int>(defaultValueProvider: () => int.MaxValue);
 
+		int cnt = 1000;
 		while (queue.Count() > 0) {
+			cnt--;
+			if (cnt < 0) {
+				break;
+			}
 			var element = queue.Dequeue();
 			if (reachedStates.ContainsKey(element.first)) {
 				continue;
