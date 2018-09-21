@@ -21,6 +21,11 @@ public class Board : MonoBehaviour {
 	}
 
 	void Start() {
+		Create();
+		Game.instance.Start();
+	}
+
+	void RestoreCells() {
 		cells = new Cell[n, m];
 		FindObjectsOfType<Cell>().ForEach(c => cells[c.x, c.y] = c);
 	}

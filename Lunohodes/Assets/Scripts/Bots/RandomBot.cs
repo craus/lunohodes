@@ -23,7 +23,7 @@ public class RandomBot : PlayerController {
 	public void Update() {
 		if (player == Game.instance.mover) {
 			if (Time.time > lastActionTime + deltaActionTime) {
-				var movingUnit = Unit.all.FirstOrDefault(u => u.energy != 0);
+				var movingUnit = Game.instance.units.FirstOrDefault(u => u.energy != 0);
 				if (movingUnit != null) {
 					if (movingUnit.abilityEffectInProgress != null) {
 						if (movingUnit.abilityEffectInProgress.GetStatus(movingUnit) == AbilityEffect.Status.WaitingCell) {
@@ -42,7 +42,7 @@ public class RandomBot : PlayerController {
 					}
 				}
 
-				movingUnit = Unit.all.Where(u => u.moves > 0).ToList().rnd();
+				movingUnit = Game.instance.units.Where(u => u.moves > 0).ToList().rnd();
 				if (movingUnit == null) {
 					FinishMove();
 					Act();

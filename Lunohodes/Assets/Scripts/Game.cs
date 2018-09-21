@@ -5,6 +5,8 @@ using System.Linq;
 using UnityEngine.Events;
 
 public class Game : Singletone<Game> {
+	public List<Unit> units = new List<Unit>();
+
 	public List<Player> players;
 
 	public Player mover;
@@ -16,6 +18,8 @@ public class Game : Singletone<Game> {
 	}
 
 	public void Start() {
+		units.Clear();
+		units.AddRange(FindObjectsOfType<Unit>());
 		mover.StartMove();
 	}
 }

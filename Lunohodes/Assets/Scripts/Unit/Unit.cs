@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Unit : MonoBehaviour {
-	public static List<Unit> all = new List<Unit>();
 
 	public Figure figure;
 	public Directed directed;
@@ -59,10 +58,14 @@ public class Unit : MonoBehaviour {
 	}
 
 	public void Start() {
-		all.Add(this);
+		if (!Game.instance.units.Contains(this)) {
+			Game.instance.units.Add(this);
+		}
 	}
 
 	public void OnDestroy() {
-		all.Remove(this);
+		if (Game.instance != null) {
+			Game.instance.units.Remove(this);
+		}
 	}
 }

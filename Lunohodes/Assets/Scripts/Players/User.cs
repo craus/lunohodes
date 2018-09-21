@@ -50,7 +50,7 @@ public class User : PlayerController {
 				if (current != null) {
 					current.CellClicked(hovered);
 				}
-				var underCursor = Unit.all.FirstOrDefault(l => l.figure.position == hovered);
+				var underCursor = Game.instance.units.FirstOrDefault(l => l.figure.position == hovered);
 				if (underCursor != null && underCursor.moves > 0) {
 					Select(underCursor);
 				}
