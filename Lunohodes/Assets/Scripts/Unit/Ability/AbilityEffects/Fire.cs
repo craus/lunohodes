@@ -13,6 +13,9 @@ public class Fire : AbilityEffect {
 		if (firing) {
 			return Status.WaitingCell;
 		}
+		if (unit.figure.position.ToDirection(unit.directed.direction) == null) {
+			return Status.Unusable;
+		}
 		return Status.Usable;
 	}
 
