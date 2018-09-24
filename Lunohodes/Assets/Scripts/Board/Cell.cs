@@ -17,4 +17,8 @@ public class Cell : MonoBehaviour {
 	public Cell ToDirection(int dir, int dist = 1) {
 		return Shifted(dist * (int)Mathf.Cos(dir * Mathf.PI/2), dist * (int)Mathf.Sin(dir * Mathf.PI/2));
 	}
+
+	public int Distance(Cell target) {
+		return Mathf.Abs(x - target.x) + Mathf.Abs(y - target.y);
+	}
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Unit : MonoBehaviour {
 
@@ -80,6 +81,15 @@ public class Unit : MonoBehaviour {
 			}
 		});
 		pathFinder.UpdateMap();
+	}
+
+	public void FireTo(Unit target) {
+		var fire = abilities.First(a => a.effects.Any(e => e is Fire));
+		fire.Use(this);
+		var fireEffect = fire.effects.First(e => e is Fire);
+		if (fireEffect.possibleTargets.Contains(target.figure.position)) {
+			fireEffect.CellClicked(this, target.figure.position);
+		}
 	}
 
 	public void Start() {

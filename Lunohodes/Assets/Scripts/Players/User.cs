@@ -24,6 +24,15 @@ public class User : PlayerController {
 		}
 	}
 
+	public Unit hoveredUnit {
+		get {
+			if (hovered == null) {
+				return null;
+			}
+			return Game.instance.units.FirstOrDefault(l => l.figure.position == hovered);
+		}
+	}
+
 	public List<string> unitKeys;
 
 	public LayerMask cellsMask;
@@ -82,18 +91,26 @@ public class User : PlayerController {
 				if (current != null) {
 					current.CellClicked(hovered);
 				}
-				var underCursor = Game.instance.units.FirstOrDefault(l => l.figure.position == hovered);
-				if (underCursor != null && underCursor.moves > 0) {
-					Select(underCursor);
+				if (hoveredUnit != null && hoveredUnit.moves > 0) {
+					Select(hoveredUnit);
 				}
 			}
 			if (Input.GetMouseButtonDown(1)) {
 				if (hoveredPosition != null && current != null && current.abilityEffectInProgress == null) {
-					current.MoveTo(hoveredPosition);
+					if (current.pathFinder.availableCells[hoveredPosition] < int.MaxValue) {
+						current.MoveTo(hoveredPosition);
+					}
+				}
+				if (hoveredUnit != null && hoveredUnit != current) {
+					current.FireTo(hoveredUnit);
 				}
 			}
 		}
 		CheckHovered();
+		if (current != null && current.energy <= 0 && current.abilityEffectInProgress == null) {
+			current.EndMove();
+			current = null;
+		}
 
 		if (hovered != null) {
 			highlight.position = hovered.transform.position;
