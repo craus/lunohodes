@@ -69,6 +69,19 @@ public class Unit : MonoBehaviour {
 		}
 	}
 
+	public void MoveTo(Position target) {
+		//Debug.LogFormat("{0} moves to {1}", this, target);
+		var path = pathFinder.Path(target);
+
+		//Debug.LogFormat("Path: {0}", path.ExtToString());
+		pathFinder.Path(target).ForEach(step => {
+			if (step.second != null) {
+				step.second.Use(this);
+			}
+		});
+		pathFinder.UpdateMap();
+	}
+
 	public void Start() {
 		if (!Game.instance.units.Contains(this)) {
 			Game.instance.units.Add(this);

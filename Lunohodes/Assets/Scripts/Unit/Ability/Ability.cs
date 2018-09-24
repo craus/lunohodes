@@ -42,6 +42,10 @@ public class Ability : MonoBehaviour {
 	}
 
 	public void Use(Unit unit) {
+		Debug.LogFormat("{0} uses {1}", unit, this);
+		if (GetStatus(unit) != Status.Usable) {
+			return;
+		}
 		unit.energy -= cost;
 		effects.ForEach(e => e.Use(unit));
 	}

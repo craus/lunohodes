@@ -9,5 +9,9 @@ public struct Pair<TFirst, TSecond>
 		this.first = first;
 		this.second = second;
 	}
+
+	public override string ToString() {
+		return "({0}, {1})".i(first, second);
+	}
 }
 

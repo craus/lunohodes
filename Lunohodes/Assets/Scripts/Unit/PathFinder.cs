@@ -31,18 +31,20 @@ public class PathFinder : MonoBehaviour {
 		return availableCells[position] < int.MaxValue;
 	}
 
-	public List<Position> Path(Position position) {
-		List<Position> result = new List<Position>();
+	public List<Pair<Position, Ability>> Path(Position position) {
+		var result = new List<Pair<Position, Ability>>();
 		int steps = 100;
-		while (position != unit.Position) {
+
+		result.Add(new Pair<Position, Ability>(position, null));
+		while (!position.Equals(unit.Position)) {
 			steps--;
 			if (steps == 0) {
 				break;
 			}
-			result.Add(position);
+			result.Add(solution[position]);
 			position = solution[position].first;
 		}
-		result.Add(position);
+		result.Reverse();
 		return result;
 	}
 }

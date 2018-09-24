@@ -17,6 +17,9 @@ public class User : PlayerController {
 
 	public Position hoveredPosition {
 		get {
+			if (hovered == null) {
+				return null;
+			}
 			return new Position(hovered, hoveredDirection);
 		}
 	}
@@ -82,6 +85,11 @@ public class User : PlayerController {
 				var underCursor = Game.instance.units.FirstOrDefault(l => l.figure.position == hovered);
 				if (underCursor != null && underCursor.moves > 0) {
 					Select(underCursor);
+				}
+			}
+			if (Input.GetMouseButtonDown(1)) {
+				if (hoveredPosition != null && current != null && current.abilityEffectInProgress == null) {
+					current.MoveTo(hoveredPosition);
 				}
 			}
 		}

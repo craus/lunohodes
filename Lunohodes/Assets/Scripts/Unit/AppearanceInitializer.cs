@@ -10,7 +10,6 @@ public class AppearanceInitializer : MonoBehaviour {
 	public List<OwnerFlag> ownerFlags;
 
 	public void Start() {
-		Debug.LogFormat("Start");
 		ownerFlags.ForEach(o => o.Apply());
 		ghostBodies.ForEach(g => g.Apply());
 	}

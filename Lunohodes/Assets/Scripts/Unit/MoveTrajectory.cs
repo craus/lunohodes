@@ -22,7 +22,7 @@ public class MoveTrajectory : MonoBehaviour {
 
 		line.positionCount = path.Count;
 		for (int i = 0; i < path.Count; i++) {
-			line.SetPosition(i, path[i].cell.transform.position);
+			line.SetPosition(i, path[i].first.cell.transform.position);
 		}
 	}
 }

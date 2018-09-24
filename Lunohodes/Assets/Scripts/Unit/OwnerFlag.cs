@@ -10,7 +10,6 @@ public class OwnerFlag : MonoBehaviour {
 	public List<MeshRenderer> renderers;
 
 	public void Apply() {
-		Debug.LogFormat("Apply");
 		if (unit != null && unit.owner != null) {
 			var material = new Material(renderers[0].sharedMaterial);
 			material.color = unit.owner.color;
