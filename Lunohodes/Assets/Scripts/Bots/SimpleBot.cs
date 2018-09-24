@@ -24,10 +24,12 @@ public class SimpleBot : PlayerController {
 
 	public Map<Position, int> Distances() {
 		Map<Position, int> result = new Map<Position, int>();
-		Algorithms.Dijkstra(
+		Algorithms.Dijkstra<Position, Pair<Ability, Position>, int>(
 			result, 
 			new Position(current.figure.position, current.directed.direction),
-			p => LunohodeAlgorithms.PossibleMoves(current, p)
+			p => LunohodeAlgorithms.PossibleMoves(current, p),
+			a => a.first.cost,
+			a => a.second
 		);
 		return result;
 	}

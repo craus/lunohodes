@@ -21,15 +21,23 @@ public class Algorithms
         return result;
     }
 
-	public static void Dijkstra<StateType>(
-		Map<StateType, int> reachedStates, 
-		StateType start, 
-		Func<StateType, IEnumerable<Pair<StateType, int>>> getNextStates
+	public static void Dijkstra<Vertex, Edge, Mark>(
+		Map<Vertex, int> reachedStates, 
+		Vertex start, 
+		Func<Vertex, IEnumerable<Edge>> getEdgesFrom,
+		Func<Edge, int> weight,
+		Func<Edge, Vertex> to,
+		Map<Vertex, Pair<Vertex, Mark>> solution = null,
+		Func<Edge, Mark> mark = null
 	) {
-		var queue = new PriorityQueue<Pair<StateType, int>>(less: (a,b) => a.second < b.second);
-		queue.Enqueue(new Pair<StateType, int>(start, 0));
+		var queue = new PriorityQueue<Pair<Vertex, int>>(less: (a,b) => a.second < b.second);
+		queue.Enqueue(new Pair<Vertex, int>(start, 0));
 
-		var distances = new Map<StateType, int>(defaultValueProvider: () => int.MaxValue);
+		var distances = new Map<Vertex, int>(defaultValueProvider: () => int.MaxValue);
+
+		if (solution == null) {
+			solution = new Map<Vertex, Pair<Vertex, Mark>>();
+		}
 
 		int cnt = 1000;
 		while (queue.Count() > 0) {
@@ -43,11 +51,12 @@ public class Algorithms
 			}
 			reachedStates.Add(element.first, element.second);
 
-			getNextStates(element.first).ToList().ForEach(nextState => {
-				var newDistance = element.second + nextState.second;
-				if (newDistance < distances[nextState.first]) {
-					distances[nextState.first] = newDistance;
-					queue.Enqueue(new Pair<StateType, int>(nextState.first, newDistance));
+			getEdgesFrom(element.first).ToList().ForEach(edge => {
+				var newDistance = element.second + weight(edge);
+				if (newDistance < distances[to(edge)]) {
+					distances[to(edge)] = newDistance;
+					solution[to(edge)] = new Pair<Vertex, Mark>(element.first, mark(edge));
+					queue.Enqueue(new Pair<Vertex, int>(to(edge), newDistance));
 				}
 			});
 		}

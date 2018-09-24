@@ -5,13 +5,13 @@ using System;
 
 public static class LunohodeAlgorithms
 {
-	public static List<Pair<Position, int>> PossibleMoves(Unit unit, Position pos) {
-		var result = new List<Pair<Position, int>>();
+	public static List<Pair<Ability, Position>> PossibleMoves(Unit unit, Position pos) {
+		var result = new List<Pair<Ability, Position>>();
 		unit.abilities.ForEach(a => {
 			if (a.IsRepositioning()) {
 				var to = a.To(pos);
 				if (to != null) {
-					result.Add(new Pair<Position, int>(to, a.cost));
+					result.Add(new Pair<Ability, Position>(a, a.To(pos)));
 				}
 			}
 		});

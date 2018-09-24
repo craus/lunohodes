@@ -8,10 +8,19 @@ public class PathFinder : MonoBehaviour {
 	public Unit unit;
 
 	public Map<Position, int> availableCells = new Map<Position, int>(() => int.MaxValue);
+	public Map<Position, Pair<Position, Ability>> solution = new Map<Position, Pair<Position, Ability>>();
 
 	public void UpdateMap() {
 		availableCells = new Map<Position, int>(() => int.MaxValue);
-		Algorithms.Dijkstra(availableCells, unit.Position, p => LunohodeAlgorithms.PossibleMoves(unit, p));
+		Algorithms.Dijkstra<Position, Pair<Ability, Position>, Ability>(
+			availableCells, 
+			unit.Position, 
+			p => LunohodeAlgorithms.PossibleMoves(unit, p),
+			a => a.first.cost,
+			a => a.second, 
+			solution,
+			a => a.first
+		);
 	}
 
 	public bool Available(Cell cell) {
@@ -20,5 +29,20 @@ public class PathFinder : MonoBehaviour {
 
 	public bool Available(Position position) {
 		return availableCells[position] < int.MaxValue;
+	}
+
+	public List<Position> Path(Position position) {
+		List<Position> result = new List<Position>();
+		int steps = 100;
+		while (position != unit.Position) {
+			steps--;
+			if (steps == 0) {
+				break;
+			}
+			result.Add(position);
+			position = solution[position].first;
+		}
+		result.Add(position);
+		return result;
 	}
 }
