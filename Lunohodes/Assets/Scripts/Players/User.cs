@@ -85,7 +85,7 @@ public class User : PlayerController {
 			});
 			if (Input.GetButtonDown("End Turn")) {
 				Debug.LogFormat("End Turn");
-				FinishMove();
+				this.NextFrame().Then(() => FinishMove());
 			}
 			if (Input.GetMouseButtonDown(0)) {
 				if (current != null) {
@@ -97,11 +97,11 @@ public class User : PlayerController {
 			}
 			if (Input.GetMouseButtonDown(1)) {
 				if (hoveredPosition != null && current != null && current.abilityEffectInProgress == null) {
-					if (current.pathFinder.availableCells[hoveredPosition] < int.MaxValue) {
+					if (current.pathFinder.AvailableInThisTurn(hoveredPosition)) {
 						current.MoveTo(hoveredPosition);
 					}
 				}
-				if (hoveredUnit != null && hoveredUnit != current) {
+				if (hoveredUnit != null && hoveredUnit != current && current.CanFire(hoveredUnit)) {
 					current.FireTo(hoveredUnit);
 				}
 			}

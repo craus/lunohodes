@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using RSG;
 
 public class Unit : MonoBehaviour {
 
@@ -83,13 +84,29 @@ public class Unit : MonoBehaviour {
 		pathFinder.UpdateMap();
 	}
 
+	public Ability Fire {
+		get {
+			return abilities.First(a => a.effects.Any(e => e is Fire));
+		}
+	}
+
+	public Fire FireEffect {
+		get {
+			return Fire.effects.First(e => e is Fire) as Fire;
+		}
+	}
+
 	public void FireTo(Unit target) {
-		var fire = abilities.First(a => a.effects.Any(e => e is Fire));
-		fire.Use(this);
-		var fireEffect = fire.effects.First(e => e is Fire);
+		Fire.Use(this);
+		var fireEffect = Fire.effects.First(e => e is Fire);
 		if (fireEffect.possibleTargets.Contains(target.figure.position)) {
 			fireEffect.CellClicked(this, target.figure.position);
+			this.NextFrame().Then(() => pathFinder.UpdateMap());
 		}
+	}
+
+	public bool CanFire(Unit target) {
+		return FireEffect.CanFire(this, target);
 	}
 
 	public void Start() {

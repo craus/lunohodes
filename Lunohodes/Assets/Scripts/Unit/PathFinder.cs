@@ -31,6 +31,10 @@ public class PathFinder : MonoBehaviour {
 		return availableCells[position] < int.MaxValue;
 	}
 
+	public bool AvailableInThisTurn(Position position) {
+		return availableCells[position] <= unit.energy;
+	}
+
 	public List<Pair<Position, Ability>> Path(Position position) {
 		var result = new List<Pair<Position, Ability>>();
 		int steps = 100;

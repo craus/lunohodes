@@ -8,6 +8,7 @@ public class Fire : AbilityEffect {
 	public bool firing = false;
 	public int distance;
 
+	public const int MAX_DISTANCE = 6;
 
 	public override Status GetStatus(Unit unit) {
 		if (firing) {
@@ -22,13 +23,22 @@ public class Fire : AbilityEffect {
 	public override void Use(Unit unit) {
 		firing = true;
 		unit.abilityEffectInProgress = this;
-		distance = Random.Range(1, 7);
+		distance = Random.Range(1, MAX_DISTANCE+1);
 		for (int i = 1; i <= distance; i++) {
 			var cell = unit.figure.position.ToDirection(unit.directed.direction, i);
 			if (cell != null) {
 				possibleTargets.Add(cell);
 			}
 		}
+	}
+
+	public bool CanFire(Unit unit, Unit target) {
+		for (int i = 1; i <= MAX_DISTANCE; i++) {
+			if (unit.figure.position.ToDirection(unit.directed.direction, i) == target.figure.position) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public override void CellClicked(Unit unit, Cell cell) {

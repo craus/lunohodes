@@ -10,6 +10,7 @@ public class GhostBody : MonoBehaviour {
 	public List<MeshRenderer> renderers;
 
 	public Transform ghostBody;
+	public Transform normalBody;
 
 	[ContextMenu("Apply")]
 	public void Apply() {
@@ -29,16 +30,22 @@ public class GhostBody : MonoBehaviour {
 	public void Update() {
 		if (!Extensions.Editor()) {
 			ghostBody.gameObject.SetActive(false);
+			normalBody.gameObject.SetActive(true);
 			if (
 				unit.owner.user != null &&
 				unit.owner.user.current == unit &&
 				unit.owner.user.hovered != null &&
-				unit.pathFinder.Available(unit.owner.user.hoveredPosition)
+				unit.abilityEffectInProgress == null &&
+				unit.pathFinder.AvailableInThisTurn(unit.owner.user.hoveredPosition)
 			) {
 				ghostBody.gameObject.SetActive(true);
 				ghostBody.position = unit.owner.user.hovered.transform.position;
 
 				ghostBody.transform.eulerAngles = Vector3.up * 90 * (1 - unit.owner.user.hoveredDirection);
+
+				if (unit.owner.user.hovered == unit.figure.position) {
+					normalBody.gameObject.SetActive(false);
+				}
 			}
 		}
 	}

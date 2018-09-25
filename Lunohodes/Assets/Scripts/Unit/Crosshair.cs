@@ -18,7 +18,11 @@ public class Crosshair : MonoBehaviour {
 		}
 		var unit = user.current;
 		var target = user.hoveredUnit;
-		if (unit == null || target == null) {
+		if (unit == null || target == null || target == unit) {
+			images.SetActive(false);
+			return;
+		}
+		if (!unit.CanFire(target)) {
 			images.SetActive(false);
 			return;
 		}

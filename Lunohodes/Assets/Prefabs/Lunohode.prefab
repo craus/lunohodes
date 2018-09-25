@@ -6013,6 +6013,7 @@ MonoBehaviour:
   - {fileID: 23025414292847290}
   - {fileID: 23211299910730900}
   ghostBody: {fileID: 4850246266708980}
+  normalBody: {fileID: 4132028485013272}
 --- !u!114 &114748128104640204
 MonoBehaviour:
   m_ObjectHideFlags: 1

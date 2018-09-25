@@ -19,7 +19,7 @@ public class ActionCost : MonoBehaviour {
 			return;
 		}
 		var unit = user.current;
-		if (unit == null || !unit.pathFinder.Available(user.hoveredPosition)) {
+		if (unit == null || !unit.pathFinder.AvailableInThisTurn(user.hoveredPosition)) {
 			images.SetActive(false);
 			return;
 		}

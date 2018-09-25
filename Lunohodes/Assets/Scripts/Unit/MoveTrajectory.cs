@@ -13,7 +13,7 @@ public class MoveTrajectory : MonoBehaviour {
 			return;
 		}
 		var unit = user.current;
-		if (unit == null || !unit.pathFinder.Available(user.hoveredPosition)) {
+		if (unit == null || unit.abilityEffectInProgress != null || !unit.pathFinder.AvailableInThisTurn(user.hoveredPosition)) {
 			line.gameObject.SetActive(false);
 			return;
 		}
