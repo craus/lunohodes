@@ -24,7 +24,13 @@ public class PathFinder : MonoBehaviour {
 	}
 
 	public bool Available(Cell cell) {
-		return availableCells.Any(p => p.Key.cell == cell && p.Value <= unit.energy);
+		for (int i = 0; i < Directed.DIRECTIONS; i++) {
+			if (availableCells[new Position(cell, i)] <= unit.energy) {
+				return true;
+			}
+		}
+		return false;
+		//return availableCells.Any(p => p.Key.cell == cell && p.Value <= unit.energy);
 	}
 
 	public bool Available(Position position) {
