@@ -7,9 +7,13 @@ public class Directed : MonoBehaviour {
 	public int direction;
 	public const int DIRECTIONS = 4;
 
+	public Vector3 EulerAngles() {
+		return Vector3.up * 90 * (1 - direction);
+	}
+
 	[ContextMenu("Direct")]
 	public void Direct() {
-		transform.eulerAngles = Vector3.up * 90 * (1 - direction);
+		transform.eulerAngles = EulerAngles();
 	}
 
 	public void Direct(int direction) {
@@ -23,9 +27,13 @@ public class Directed : MonoBehaviour {
 		}
 	}
 
-	public void Rotate(int delta) {
+	public void Rotate(int delta, bool animate = false) {
 		direction += delta;
 		direction = direction.modulo(DIRECTIONS);
-		Direct();
+		if (animate) {
+			this.Turn(Quaternion.Euler(EulerAngles()), 0.1f);
+		} else {
+			Direct();
+		}
 	}
 }

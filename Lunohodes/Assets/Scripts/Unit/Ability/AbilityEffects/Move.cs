@@ -16,7 +16,8 @@ public class Move : AbilityEffect, RepositioningEffect {
 	}
 
 	public override void Use(Unit unit) {
-		unit.figure.Place(positionFinder.Position(unit.Position));
+		unit.figure.Place(positionFinder.Position(unit.Position), changeTransform: false);
+		unit.figure.Move(unit.figure.position.transform.position, 0.1f);
 	}
 
 	public Position To(Position from) {

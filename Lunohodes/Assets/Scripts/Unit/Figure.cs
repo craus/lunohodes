@@ -20,7 +20,7 @@ public class Figure : MonoBehaviour {
 		}
 	}
 
-	public void Place(Cell position) {
+	public void Place(Cell position, bool changeTransform = true) {
 		Leave();
 
 		this.position = position;
@@ -29,21 +29,9 @@ public class Figure : MonoBehaviour {
 			position.figures.Add(this);
 		}
 
-		if (position != null) {
+		if (position != null && changeTransform) {
 			transform.SetParent(position.transform, worldPositionStays: false);
 		}
-	}
-
-	public bool Move(int direction, int dist = 1, Func<Cell, bool> condition = null) {
-		if (condition == null) {
-			condition = c => true;
-		}
-		Cell target = position.ToDirection(direction, dist);
-		if (target != null && condition(target)) {
-			Place(target);
-			return true;
-		}
-		return false;
 	}
 
 	public void OnDestroy() {

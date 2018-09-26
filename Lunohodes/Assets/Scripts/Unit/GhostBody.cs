@@ -24,6 +24,8 @@ public class GhostBody : MonoBehaviour {
 	public void Start() {
 		if (Extensions.Editor()) {
 			Apply();
+		} else {
+			ghostBody.SetParent(null);
 		}
 	}
 
@@ -43,9 +45,17 @@ public class GhostBody : MonoBehaviour {
 
 				ghostBody.transform.eulerAngles = Vector3.up * 90 * (1 - unit.owner.user.hoveredDirection);
 
-				if (unit.owner.user.hovered == unit.figure.position) {
-					normalBody.gameObject.SetActive(false);
-				}
+//				if (unit.owner.user.hovered == unit.figure.position) {
+//					normalBody.gameObject.SetActive(false);
+//				}
+			}
+		}
+	}
+
+	public void OnDestroy() {
+		if (!Extensions.Editor()) {
+			if (ghostBody != null) {
+				Destroy(ghostBody.gameObject);
 			}
 		}
 	}

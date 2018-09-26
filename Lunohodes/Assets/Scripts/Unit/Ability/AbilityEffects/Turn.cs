@@ -7,7 +7,7 @@ public class Turn : AbilityEffect, RepositioningEffect {
 	public int deltaDirection;
 
 	public override void Use(Unit unit) {
-		unit.directed.Rotate(deltaDirection);
+		unit.directed.Rotate(deltaDirection, animate: true);
 	}
 
 	public Position To(Position from) {
