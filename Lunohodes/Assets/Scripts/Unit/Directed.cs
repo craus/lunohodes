@@ -31,7 +31,7 @@ public class Directed : MonoBehaviour {
 		direction += delta;
 		direction = direction.modulo(DIRECTIONS);
 		if (animate) {
-			this.Turn(Quaternion.Euler(EulerAngles()), 0.1f);
+			this.Turn(Quaternion.Euler(EulerAngles()), 0.25f);
 		} else {
 			Direct();
 		}

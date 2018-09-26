@@ -23,19 +23,34 @@ public class TransformAnimator : MonoBehaviour {
 		}
 	}
 
-	public IPromise Animate(State target, float duration) {
-		startTime = Time.time;
+	public float time {
+		get {
+			return Time.realtimeSinceStartup;
+		}
+	}
+
+	public IPromise Animate(State target, float duration, float startTime = float.NaN) {
+		duration = 0.25f;
+		if (float.IsNaN(startTime)) {
+			startTime = time;
+		}
 		this.duration = duration;
 		this.b = target;
 		this.a = new State(transform.position, transform.rotation);
+
 		promise = new Promise();
+
+		LateUpdate();
+
 		return promise;
 	}
 
-	public void Update() {
-		var t = Mathf.Clamp((Time.time - startTime) / duration, 0, 1);
-		transform.position = Vector3.Lerp(a.position, b.position, t);
-		transform.rotation = Quaternion.Lerp(a.rotation, b.rotation, t);
+	public void LateUpdate() {
+		var t = Mathf.Clamp((time - startTime) / duration, 0, 1);
+		//var r = Mathf.Sin((2 * t - 1) * Mathf.PI / 2);
+		var r = t;
+		transform.position = Vector3.Lerp(a.position, b.position, r);
+		transform.rotation = Quaternion.Lerp(a.rotation, b.rotation, r);
 		if (t == 1) {
 			FinishAnimation();
 		}

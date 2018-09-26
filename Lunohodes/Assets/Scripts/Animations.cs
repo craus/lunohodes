@@ -6,6 +6,8 @@ using RSG;
 public static class Animations {
 	static IPromise current = Promise.Resolved();
 
+	static float endTime = float.NaN;
+
 	public static void Move(this MonoBehaviour obj, Vector3 target, float duration) {
 		current = current.Then(() => obj.gameObject.AddComponent<TransformAnimator>().Animate(
 			new TransformAnimator.State(target, obj.transform.rotation), 
