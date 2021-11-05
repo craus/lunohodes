@@ -25,8 +25,8 @@ public class GhostBody : MonoBehaviour {
 		if (Extensions.Editor()) {
 			Apply();
 		} else {
-			Debug.LogFormat($"{transform.Path()}");
-			ghostBody.SetParent(null);
+			//Debug.LogFormat($"{transform.Path()}");
+			//ghostBody.SetParent(null);
 		}
 	}
 
