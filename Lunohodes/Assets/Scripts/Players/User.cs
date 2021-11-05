@@ -84,7 +84,7 @@ public class User : PlayerController {
 				}
 			});
 			if (Input.GetButtonDown("End Turn")) {
-				Debug.LogFormat("End Turn");
+				Debug.LogFormat($"{this}: End Turn");
 				this.NextFrame().Then(() => FinishMove());
 			}
 			if (Input.GetMouseButtonDown(0)) {

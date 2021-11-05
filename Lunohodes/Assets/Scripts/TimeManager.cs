@@ -15,6 +15,7 @@ public class TimeManager : Singletone<TimeManager> {
 
 	public void Update() {
 		if (nextFrame != null) {
+			Debug.Log($"Next frame");
 			nextFrame.Resolve();
 			nextFrame = null;
 		}
