@@ -10,6 +10,12 @@ public class Cell : MonoBehaviour {
 	public int x;
 	public int y;
 
+	public TMPro.TextMeshPro text;
+
+	public void OnValidate() {
+		text.text = $"({x}, {y})";
+	}
+
 	public Cell Shifted(int dx, int dy) {
 		return board.GetCell(x + dx, y + dy);
 	}
