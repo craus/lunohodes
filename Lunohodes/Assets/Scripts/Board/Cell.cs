@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Cell : MonoBehaviour {
 	public List<Figure> figures;
 
