@@ -73,7 +73,7 @@ public class User : PlayerController {
 		}
 	}
 
-	public void Update() {
+	public void ReadInput() {
 		if (player == Game.instance.mover) {
 			unitKeys.ForEach(key => {
 				if (Input.GetButtonDown(key) && current != null) {
@@ -106,6 +106,9 @@ public class User : PlayerController {
 				}
 			}
 		}
+	}
+
+	public void Update() {
 		CheckHovered();
 		if (current != null && current.energy <= 0 && current.abilityEffectInProgress == null) {
 			current.EndMove();
