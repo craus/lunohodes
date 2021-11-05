@@ -4,3 +4,6 @@ Lunohodes/Temp/
 Lunohodes/obj/
 *.csproj
 Lunohodes/Lunohodes.userprefs
+Lunohodes/Logs/
+Lunohodes/.vs/
+Lunohodes/UserSettings/
