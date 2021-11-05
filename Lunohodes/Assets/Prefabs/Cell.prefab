@@ -534,6 +534,7 @@ MonoBehaviour:
   x: 0
   y: 0
   text: {fileID: 8569281242156889481}
+  cellRenderer: {fileID: 23331991755616986}
 --- !u!1 &2825160088778974128
 GameObject:
   m_ObjectHideFlags: 0
@@ -642,8 +643,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 2164260863
+  m_fontColor: {r: 1, g: 1, b: 1, a: 0.5019608}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

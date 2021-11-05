@@ -20,7 +20,11 @@ public static class Extensions
 	}
 
 	public static T Instantiate<T>(T sample) where T : UnityEngine.Object {
-		return PrefabUtility.InstantiatePrefab(sample) as T;
+        if (Editor()) {
+            return PrefabUtility.InstantiatePrefab(sample) as T;
+        } else {
+            return UnityEngine.Object.Instantiate(sample) as T;
+        }
 	}
 
 	public static void Destroy(GameObject go) {

@@ -11,9 +11,18 @@ public class Cell : MonoBehaviour {
 	public int y;
 
 	public TMPro.TextMeshPro text;
+	public MeshRenderer cellRenderer;
+
+	private void UpdateText() {
+		text.text = $"({x}, {y})";
+	}
 
 	public void OnValidate() {
-		text.text = $"({x}, {y})";
+		UpdateText();
+	}
+
+	public void Start() {
+		UpdateText();
 	}
 
 	public Cell Shifted(int dx, int dy) {

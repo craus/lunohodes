@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
 
 public class Board : Singletone<Board> {
 	public int n = 8;
@@ -11,6 +12,7 @@ public class Board : Singletone<Board> {
     public Material black;
 
 	public Cell[,] cells;
+	[SerializeField] private List<Cell> cellsList;
 
 	public bool Inside(int x, int y) {
 		return 0 <= x && x < n && 0 <= y && y < m;
@@ -35,7 +37,13 @@ public class Board : Singletone<Board> {
 		transform.Children().ForEach(t => Extensions.Destroy(t.gameObject));
 	}
 
-    [ContextMenu("Create")]
+	public void OnValidate() {
+		if (cells != null) {
+			cellsList = cells.Cast<Cell>().ToList();
+		}
+	}
+
+	[ContextMenu("Create")]
 	void Create() {
 		Clear();
 		cells = new Cell[n, m];
@@ -47,7 +55,7 @@ public class Board : Singletone<Board> {
 				cell.gameObject.name = "Cell {0}, {1}".i(i, j);
 				cells[i, j] = cell;
 				cell.board = this;
-				cell.GetComponentInChildren<MeshRenderer>().sharedMaterial = (i + j) % 2 == 0 ? white : black;
+				cell.cellRenderer.sharedMaterial = (i + j) % 2 == 0 ? white : black;
                 cell.transform.position = new Vector3(size * i, 0, size*j);
                 cell.transform.SetParent(transform);
             }
